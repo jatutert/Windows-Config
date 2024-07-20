@@ -2,7 +2,6 @@
 #	Created by John Tutert for TutSOFT
 #
 Set-Service -Name "wuauserv" -Status stopped -StartupType disabled
-Set-Service -Name "wuauserv" -Status stopped -StartupType disabled
 Set-Service -Name "themes" -Status stopped -StartupType disabled
 Set-Service -Name "sysmain" -Status stopped -StartupType disabled
 Set-Service -Name "spooler" -Status stopped -StartupType disabled
