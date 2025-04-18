@@ -27,7 +27,7 @@ if (-not (Test-Path -Path $directory)) {
 }
 #
 # Download het bestand en sla het op in de gedefinieerde directory
-Invoke-WebRequest -Uri $sshsurl -OutFile $rmzipdestinationPath
+Invoke-WebRequest -Uri $rmsurl -OutFile $rmzipdestinationPath
 
 # Uitpakken ZIP-Bestand naar folder Desktop 
 Expand-Archive -LiteralPath $rmzipdestinationPath -DestinationPath $rmdestinationPath

@@ -34,5 +34,8 @@ Set-ItemProperty -Path "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Feeds" -
 winget upgrade --all --source msstore --accept-source-agreements --accept-package-agreements
 winget install 9MZ1SNWT0N5D --source msstore --accept-source-agreements --accept-package-agreements
 
+#	Windows Terminal
+winget install 9N0DX20HK701 --source msstore --accept-source-agreements --accept-package-agreements
+
 #	Thats all Folks 
 #
