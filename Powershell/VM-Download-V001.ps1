@@ -30,7 +30,7 @@ if (-not (Test-Path -Path $directory)) {
 Invoke-WebRequest -Uri $rmsurl -OutFile $rmzipdestinationPath
 
 # Uitpakken ZIP-Bestand naar folder Desktop 
-Expand-Archive -LiteralPath $rmzipdestinationPath -DestinationPath $rmdestinationPath
+Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $rmzipdestinationPath -DestinationPath $rmdestinationPath
 
 #
 #	#################################################################################################################
