@@ -8,28 +8,33 @@
 #
 #
 #	#################################################################################################################
-#	# SSH Server Configuration Script
+#	# RAMMAP
 #	#################################################################################################################
 #
 #	https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/Powershell/VM-OOBE-Config-SSH-V001.ps1
 #
 # Definieer de URL van het bestand dat je wilt downloaden
-$sshsurl = "https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/Powershell/VM-OOBE-Config-SSH-V001.ps1"
+$rmsurl = "https://download.sysinternals.com/files/RAMMap.zip"
 # Verkrijg de huidige gebruikersnaam
 $username = [System.Environment]::UserName
 # Definieer het pad waar het bestand moet worden opgeslagen
-$sshsdestinationPath = "C:\Users\$username\Downloads\VM-OOBE-Config-SSH-V001.ps1"
+$rmzipdestinationPath = "C:\Users\$username\Downloads\RAMMap.zip"
+$rmdestinationPath = "C:\Users\$username\Desktop"
 # Zorg ervoor dat de directory bestaat
-$directory = [System.IO.Path]::GetDirectoryName($sshsdestinationPath)
+$directory = [System.IO.Path]::GetDirectoryName($rmzipdestinationPath)
 if (-not (Test-Path -Path $directory)) {
     New-Item -ItemType Directory -Path $directory -Force
 }
 #
 # Download het bestand en sla het op in de gedefinieerde directory
-Invoke-WebRequest -Uri $sshsurl -OutFile $sshsdestinationPath
+Invoke-WebRequest -Uri $sshsurl -OutFile $rmzipdestinationPath
+
+# Uitpakken ZIP-Bestand naar folder Desktop 
+Expand-Archive -LiteralPath $rmzipdestinationPath -DestinationPath $rmdestinationPath
+
 #
 #	#################################################################################################################
-#	# SSH Server Configuration Script
+#	# Powershell 7.5 
 #	#################################################################################################################
 #
 #	x64
