@@ -28,16 +28,16 @@ Microsoft.Powershell.Management\Stop-Service -Name "WSearch" -Force
 #	cmd.exe /c "sc stop WSearch"
 
 #	Disable Windows Services
-Microsoft.Powershell.Management\Set-Service -Name "wuauserv" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "themes" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "sysmain" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "spooler" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "sharedaccess" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "iphlpsvc" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "defragsvc" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "audiosrv" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "browser" -StartupType Disabled
-Microsoft.Powershell.Management\Set-Service -Name "Wsearch" -StartupType Disabled
+Microsoft.Powershell.Management\Set-Service -Name "wuauserv" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "themes" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "sysmain" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "spooler" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "sharedaccess" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "iphlpsvc" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "defragsvc" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "audiosrv" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "browser" -StartupType 'Disabled'
+Microsoft.Powershell.Management\Set-Service -Name "Wsearch" -StartupType 'Disabled'
 
 #	cmd.exe /c "sc config wuauserv start=disabled"
 #	cmd.exe /c "sc config themes start=disabled"
