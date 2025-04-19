@@ -62,17 +62,16 @@ Invoke-WebRequest -Uri $ps75url -OutFile $ps75destinationPath
 #	#################################################################################################################
 #
 # Definieer de URL van het bestand dat je wilt downloaden
-$rmsurl = "https://download.sysinternals.com/files/RAMMap.zip"
+$wgiurl = "https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/Command/VM-OOBE-Winget-Install-V001.cmd"
 # Verkrijg de huidige gebruikersnaam
 $username = [System.Environment]::UserName
 # Definieer het pad waar het bestand moet worden opgeslagen
-$rmzipdestinationPath = "C:\Users\$username\Downloads\RAMMap.zip"
-$rmdestinationPath = "C:\Users\$username\Desktop"
+$wgidestinationPath = "C:\Users\$username\Downloads\VM-OOBE-Winget-Install-V001.cmd"
 # Zorg ervoor dat de directory bestaat
-$directory = [System.IO.Path]::GetDirectoryName($rmzipdestinationPath)
+$directory = [System.IO.Path]::GetDirectoryName($wgidestinationPath)
 if (-not (Test-Path -Path $directory)) {
     New-Item -ItemType Directory -Path $directory -Force
 }
 #
 # Download het bestand en sla het op in de gedefinieerde directory
-Invoke-WebRequest -Uri $rmsurl -OutFile $rmzipdestinationPath
+Invoke-WebRequest -Uri $wgiurl -OutFile $wgidestinationPath
