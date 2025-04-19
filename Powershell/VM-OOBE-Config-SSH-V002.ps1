@@ -20,7 +20,7 @@ Write-Output "Verwijderen OpenSSH Server"
 Remove-WindowsCapability -Online -Name OpenSSH.Server~~~~0.0.1.0
 
 Write-Output "DISM Clean Up the WinSxS Folder"
-Dism.exe /online /Cleanup-Image /StartComponentCleanup
+Dism.exe /online /Cleanup-Image /StartComponentCleanup /Quiet
 
 Write-Output "Installatie SSH Client"
 Add-WindowsCapability -Online -Name OpenSSH.Client~~~~0.0.1.0
