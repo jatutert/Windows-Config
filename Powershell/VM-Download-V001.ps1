@@ -55,3 +55,24 @@ if (-not (Test-Path -Path $directory)) {
 #
 # Download het bestand en sla het op in de gedefinieerde directory
 Invoke-WebRequest -Uri $ps75url -OutFile $ps75destinationPath
+
+#
+#	#################################################################################################################
+#	# Winget APP Installer vanaf GitHUB JT
+#	#################################################################################################################
+#
+# Definieer de URL van het bestand dat je wilt downloaden
+$rmsurl = "https://download.sysinternals.com/files/RAMMap.zip"
+# Verkrijg de huidige gebruikersnaam
+$username = [System.Environment]::UserName
+# Definieer het pad waar het bestand moet worden opgeslagen
+$rmzipdestinationPath = "C:\Users\$username\Downloads\RAMMap.zip"
+$rmdestinationPath = "C:\Users\$username\Desktop"
+# Zorg ervoor dat de directory bestaat
+$directory = [System.IO.Path]::GetDirectoryName($rmzipdestinationPath)
+if (-not (Test-Path -Path $directory)) {
+    New-Item -ItemType Directory -Path $directory -Force
+}
+#
+# Download het bestand en sla het op in de gedefinieerde directory
+Invoke-WebRequest -Uri $rmsurl -OutFile $rmzipdestinationPath
