@@ -1,10 +1,12 @@
 #
 #
 #	Virtual Machine File Download Script
-#	Version 1
+#	Created by John Tutert for TutSOFT
 #
+#
+#	Version 1
 #	18 april 2025
-#	John Tutert
+#
 #
 #
 #	#################################################################################################################

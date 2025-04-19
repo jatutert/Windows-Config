@@ -1,5 +1,9 @@
 #
 #	WinGET Install APP within Virtual Machine
+#	Created by John Tutert for TutSOFT
+#
+
+#
 #	Version 1
 #	19 april 2025
 #

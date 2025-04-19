@@ -4,6 +4,11 @@
 #	Versie 6
 #	19 april 2025
 #
+#
+#	Changelog
+#	Version 5	Powershell
+#	Version 6	Disable Browser Service 
+#
 #	Stoppen Windows Services
 Microsoft.Powershell.Management\Stop-Service -Name "wuauserv" -Force
 Microsoft.Powershell.Management\Stop-Service -Name "themes" -Force
