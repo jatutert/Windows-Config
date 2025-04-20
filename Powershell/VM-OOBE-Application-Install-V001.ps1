@@ -10,7 +10,13 @@
 #
 
 #	Microsoft PowerSHELL 7.5 Installation
-cmd.exe /s "c:\Users\Vagrant\Downloads\PowerShell-7.5.0-win-x64.MSI /quiet"
+#	
+#	Test 21 april 2025
+#	WERKT NIET
+#	NO PASS
+#
+
+#	cmd.exe /s "c:\Users\Vagrant\Downloads\PowerShell-7.5.0-win-x64.MSI /quiet"
 
 #
 #	That is all Folks
