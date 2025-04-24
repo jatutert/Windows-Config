@@ -1,12 +1,12 @@
+#
 #	Windows Virtual Machine 
-#	Out of the Box Expierence (OOBE)
+#	Out of the Box Experience (OOBE)
 #
 #	Stop and disable Windows Services Virtual Machine
 #	Created by John Tutert for TutSOFT
 #
 #	Versie 6
 #	19 april 2025
-#
 #
 #	Changelog
 #	Version 5	Powershell

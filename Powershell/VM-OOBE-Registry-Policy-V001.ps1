@@ -1,10 +1,16 @@
-#	Change Windows Policy
-#	Change Windows Registy
 #
+#	Windows Virtual Machine 
+#	Windows Out of the Box Experience (OOBE)
+#
+#	Change Windows Policy and Windows Registy Settings
 #	Created by John Tutert for TutSOFT
 #
 #	Versie 1
 #	19 april 2025
+#
+#	Changelog
+#	20250424	Universele header Script
+#
 
 #
 #	Windows News Feed uitzetten

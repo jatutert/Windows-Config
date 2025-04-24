@@ -1,8 +1,16 @@
+#
+#	Windows Virtual Machine 
+#	Windows Out of the Box Experience (OOBE)
+#
 #	Winget Accept License Terms 
 #	Created by John Tutert for TutSOFT
 #
 #	Versie 1
 #	19 april 2025
+#
+#	Changelog
+#	20250424	Universele header Script
+#
 
 cmd.exe /c "echo Y | winget upgrade" 
 

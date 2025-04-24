@@ -1,4 +1,6 @@
 #
+#	Windows Virtual Machine 
+#	Windows Out of the Box Experience (OOBE)
 #
 #	Virtual Machine File Download Script
 #	Created by John Tutert for TutSOFT
@@ -7,6 +9,8 @@
 #	Version 2
 #	18 april 2025
 #
+#	Changelog
+#	20250424	Universele header Script
 #
 
 

@@ -1,15 +1,16 @@
 #
 #
-#	Windows Out of the Box Expierence (OOBE)
-#	OpenSSH Installatie Script
+#	Windows Virtual Machine 
+#	Windows Out of the Box Experience (OOBE)
 #
-#
+#	OpenSSH Client and Server Installation Script
 #	Created by John Tutert for TutSOFT
 #
+#	Versie 3
+#	24 april 2025
 #
-#	Versie 2
-#	18 april 2025
-#
+#	Changelog
+#	20250424	Universele header Script
 #
 #	Naslag
 #
