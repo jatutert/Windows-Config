@@ -30,7 +30,7 @@
 Invoke-WebRequest -Uri "https://download.sysinternals.com/files/RAMMap.zip" -OutFile "C:\Users\$env:USERNAME\Downloads\RAMMap.zip"
 
 # Uitpakken ZIP-Bestand naar folder Desktop 
-Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath $rmzipdestinationPath -DestinationPath $rmdestinationPath
+Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath "C:\Users\$username\Downloads\RAMMap.zip" -DestinationPath "C:\Users\$username\Desktop"
 
 #
 #	#################################################################################################################
