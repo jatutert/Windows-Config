@@ -92,6 +92,9 @@ if (-not (Test-Path -Path $directory)) {
 # Download het bestand en sla het op in de gedefinieerde directory
 Invoke-WebRequest -Uri $wgiurl -OutFile $wgidestinationPath
 
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/Vagrant-VM-AD-DC-Promote.ps1" -OutFile "C:\Users\$env:USERNAME\Desktop\Vagrant-VM-AD-DC-Promote.ps1"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/03-Install-DHCP.ps1" -OutFile "C:\Users\$env:USERNAME\Desktop\03-Install-DHCP.ps1"
+
 
 #
 # Thats all folks
