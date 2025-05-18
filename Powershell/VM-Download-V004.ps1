@@ -94,7 +94,7 @@ Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/Vagrant-VM-AD-DC-Promote.ps1" -OutFile "C:\Users\$env:USERNAME\Desktop\Vagrant-VM-AD-DC-Promote.ps1"
 
 # Active Directory # Script Erik en Steven
-Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/02-Install-ActiveDirectory" -OutFile "C:\Users\$env:USERNAME\Desktop\02-Install-ActiveDirectory"
+Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/02-Install-ActiveDirectory.ps1" -OutFile "C:\Users\$env:USERNAME\Desktop\02-Install-ActiveDirectory.ps1"
 
 # DHCP Server # Script Erik en Steven 
 Invoke-WebRequest -Uri "https://raw.githubusercontent.com/jatutert/Vagrant/refs/heads/main/Scripts/Powershell/03-Install-DHCP.ps1" -OutFile "C:\Users\$env:USERNAME\Desktop\03-Install-DHCP.ps1"
