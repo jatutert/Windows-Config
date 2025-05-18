@@ -26,11 +26,13 @@
 #	# RAMMAP
 #	#################################################################################################################
 
+Write-Host "RAMMap"
+
 #	Downloaden
 Invoke-WebRequest -Uri "https://download.sysinternals.com/files/RAMMap.zip" -OutFile "C:\Users\$env:USERNAME\Downloads\RAMMap.zip"
 
 # Uitpakken ZIP-Bestand naar folder Desktop 
-Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath "C:\Users\$username\Downloads\RAMMap.zip" -DestinationPath "C:\Users\$username\Desktop"
+Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath "C:\Users\$env:USERNAME\Downloads\RAMMap.zip" -DestinationPath "C:\Users\$env:USERNAME\Desktop"
 
 #
 #	#################################################################################################################
@@ -41,6 +43,9 @@ Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath "C:\Users\$username\Dow
 #	https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.exe
 #	https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi
 #
+
+Write-Host "Powershell 7" 
+
 # Definieer de URL van het bestand dat je wilt downloaden
 $ps75url = "https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi"
 # Verkrijg de huidige gebruikersnaam
