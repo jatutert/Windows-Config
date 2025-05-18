@@ -6,8 +6,8 @@
 #	Created by John Tutert for TutSOFT
 #
 #
-#	Version 2
-#	18 april 2025
+#	Version 4
+#	18 mei 2025
 #
 #	Changelog
 #	20250424	Universele header Script
@@ -44,28 +44,13 @@ Microsoft.PowerShell.Archive\Expand-Archive -LiteralPath "C:\Users\$env:USERNAME
 #	https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi
 #
 
-Write-Host "Powershell 7" 
-
-# Definieer de URL van het bestand dat je wilt downloaden
-$ps75url = "https://github.com/PowerShell/PowerShell/releases/download/v7.5.0/PowerShell-7.5.0-win-x64.msi"
-# Verkrijg de huidige gebruikersnaam
-$username = [System.Environment]::UserName
-# Definieer het pad waar het bestand moet worden opgeslagen
-$ps75destinationPath = "C:\Users\$username\Downloads\PowerShell-7.5.0-win-x64.msi"
-# Zorg ervoor dat de directory bestaat
-$directory = [System.IO.Path]::GetDirectoryName($ps75destinationPath)
-if (-not (Test-Path -Path $directory)) {
-    New-Item -ItemType Directory -Path $directory -Force
-}
-#
-# Download het bestand en sla het op in de gedefinieerde directory
-Invoke-WebRequest -Uri $ps75url -OutFile $ps75destinationPath
-
 #
 #	#################################################################################################################
 #	# NotePAD++
 #	#################################################################################################################
 #
+
+Write-Host "NotePad++"
 
 Invoke-WebRequest -Uri "https://github.com/notepad-plus-plus/notepad-plus-plus/releases/download/v8.7.9/npp.8.7.9.Installer.x64.exe" -OutFile "C:\Users\$env:USERNAME\Downloads\npp.8.7.9.Installer.x64.exe"
 
