@@ -1,0 +1,207 @@
+:: Installatie benodigdheden
+winget install M2Team.NanaZip 
+winget install cURL.cURL
+
+@mkdir %USERPROFILE%\Downloads\ViVeTool
+
+:: Downloaden ViVeTool vanaf GitHub
+@curl -L -o %USERPROFILE%\Downloads\ViVeTool\ViVetool.zip https://github.com/thebookisclosed/ViVe/releases/download/v0.3.4/ViVeTool-v0.3.4-IntelAmd.zip
+
+:: Uitpakken Zip bestand met ViVeTool
+7z e %USERPROFILE%\Downloads\ViVeTool\ViVetool.zip -o%USERPROFILE%\Downloads\ViVeTool\ -y
+
+:: May 23
+:: Build 26200.5603 on Dev and 26120.4151 on Beta
+:: https://itstechbased.com/how-to-enable-all-new-features-in-windows-11-dev-beta-new-ai-actions-new-taskbar-change-new-apps/
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54792954,55345819
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56661439
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56887328
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:42733866
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:42739793
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:42739800
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:44357190
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:57166128 /variant:2
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56778684,56892083
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56904074
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:57571928
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:44574505
+::
+:: April 28
+:: Windows 11 24H2 April Update (KB5055627).
+:: https://itstechbased.com/how-to-enable-all-new-features-from-the-big-windows-11-24h2-april-update-kb5055627/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54237988
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47942714
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48697323
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56659543
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:56038648
+::
+:: April 21
+:: https://itstechbased.com/how-to-enable-the-new-notification-center-in-windows-11-22635-5240/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:42651849
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: April 5
+:: Windows 11 (26120.3671 and 26200.5518)
+:: https://itstechbased.com/how-to-enable-the-new-start-menu-in-windows-11-26120-3671-and-26200-5518/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:49221331,47205210
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:49402389
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:55495322
+::
+:: February 20
+:: https://itstechbased.com/how-to-enable-new-taskbar-battery-icon-and-percentage-in-windows-11-release-preview-or-main-release/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48822452
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54237969
+::
+:: January 27
+:: https://itstechbased.com/how-to-enable-the-new-drag-to-share-feature-in-windows-11-22635-4805/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45624564,53397005
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: January 23
+:: https://itstechbased.com/how-to-enable-all-new-features-in-the-big-windows-11-24h2-january-2025-update-build-26100-3025/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54237951
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:29532725
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45286384
+::
+:: Januari 21
+:: https://itstechbased.com/how-to-enable-all-new-features-in-windows-11-22635-4800-new-start-menu-new-file-explorer-home-new-copy-dialog-and-more/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47205210,49221331
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54865932
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47274802
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:51721485
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48895801
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:51784082,54618938
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: Januari 6
+:: https://itstechbased.com/how-to-enable-new-settings-app-design-in-windows-11-22635-4660/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:51784082,54618938
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: December 10 2024
+:: https://itstechbased.com/new-big-features-in-the-file-explorer-in-windows-11-22635-4580-how-to-enable/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:54572881
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:49143212
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:52081114
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47944061
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: December 3 2024
+:: https://itstechbased.com/how-to-enable-new-file-explorer-features-in-windows-11-22635-4515/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:49143212
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:52081114
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47944061
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+:: November 19 2024
+:: https://itstechbased.com/how-to-enable-all-new-features-in-the-big-windows-11-24h2-update-build-26100-2448/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:50564332,50565209
+::
+:: November 12 2024
+:: https://itstechbased.com/how-to-enable-all-new-features-in-windows-11-new-taskbar-start-menu-features-canary-and-beta/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:46493758
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45738940
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:41598133
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:41670003
+::
+:: September 25 2024
+:: https://itstechbased.com/how-to-enable-all-new-features-in-windows-11-26120-1843-new-taskbar-start-menu-file-explorer/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719,50564196
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45130483
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:32222762,47205210
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:46874415
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45286411
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:44560941
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48177092
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:40637063
+::
+:: September 4 2024
+:: https://itstechbased.com/how-to-enable-all-new-features-in-windows-11-22635-4145-new-settings-new-gamepad-keyboard/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:50692135,48433719,50557073
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:50968699
+::	%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:52793632 /variant:X (replace with 1,2 or 3)
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:52793632 /variant:1
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:51900073
+::
+:: Augustus 13
+:: https://itstechbased.com/new-start-menu-ui-in-windows-11-22635-4010-how-to-enable/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47205210,49221331,48433719
+::
+:: Juli 21 2024
+:: https://itstechbased.com/best-new-setting-in-windows-11-24h2-how-to-enable/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:39007349,48433719
+::
+:: Juli 18 2024
+:: https://itstechbased.com/how-to-enable-new-start-menu-in-windows-11-22635-3930/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:47205210,49221331,48433719
+::
+::
+:: Tot zover tot pagina 60
+:: https://itstechbased.com/category/windows-11/page/60/
+::
+::
+:: June 25
+:: https://itstechbased.com/how-to-enable-new-taskbar-settings-and-open-with-dialog-in-windows-11-22635-3790/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48525682,49082522,41118774,51339492
+::
+::
+:: June 24
+:: https://itstechbased.com/how-to-enable-new-start-menu-in-windows-11-22635-3790/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48697323
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+::
+:: June 17 2024
+:: https://itstechbased.com/how-to-enable-new-start-menu-jump-lists-in-windows-11-22635-3785/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:32222762,48433719,47205210
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+::
+:: May 28 2024
+:: https://itstechbased.com/how-to-enable-new-features-in-windows-11-22635-3646/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48513251
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45425284,48433541,48433706
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:49208286 /variant:2 
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+::
+::
+:: May 23 2024
+:: https://itstechbased.com/how-to-enable-new-file-explorer-in-windows-11-22635-3640/
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:45130483
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+
+:: 
+:: Tot zover pagina https://itstechbased.com/category/windows-11/page/72/
+:: Verder met pagina 73
+::
