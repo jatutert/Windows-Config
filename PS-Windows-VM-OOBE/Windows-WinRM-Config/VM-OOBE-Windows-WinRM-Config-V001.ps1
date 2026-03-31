@@ -1,3 +1,10 @@
+#
+#   TTTTTT  U    U  TTTTTT  SSSSSS  OOOOOO  FFFFFF  TTTTTT
+#     TT    U    U    TT    SS      O    O  FF        TT
+#     TT    U    U    TT    SSSSSS  O    O  FFFF      TT
+#     TT    U    U    TT        SS  O    O  FF        TT
+#     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
+#
 <#
 .SYNOPSIS
     Configureert WinRM + PowerShell Remoting voor remote verbindingen.
@@ -106,3 +113,7 @@ catch {
 }
 
 Write-Host "=== Configuratie voltooid ===" -ForegroundColor Cyan
+
+#
+#   Thats all folks 
+#
