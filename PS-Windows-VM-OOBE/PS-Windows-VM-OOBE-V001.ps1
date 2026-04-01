@@ -17,7 +17,7 @@
 Clear-Host
 #
 #   #######################################################################
-#   SSH
+#   Windows SSH Server
 #   #######################################################################
 #
 $OOBE_Config_SSH = "$env:USERPROFILE\Downloads\VM-OOBE-Config-SSH-V003.ps1"
@@ -29,7 +29,7 @@ while (!(Test-Path $OOBE_Config_SSH) -and $timeout -lt 10) {
     Start-Sleep -Seconds 1
     $timeout++
 }
-# 
+# 
 if ((Get-Item $OOBE_Config_SSH ).Length -gt 0) {
     & $OOBE_Config_SSH 
 }
@@ -47,7 +47,7 @@ while (!(Test-Path $OOBE_Config_Services) -and $timeout -lt 10) {
     Start-Sleep -Seconds 1
     $timeout++
 }
-# 
+# 
 if ((Get-Item $OOBE_Config_Services ).Length -gt 0) {
     & $OOBE_Config_Services 
 }
@@ -65,7 +65,7 @@ while (!(Test-Path $OOBE_Config_WinRM) -and $timeout -lt 10) {
     Start-Sleep -Seconds 1
     $timeout++
 }
-# 
+# 
 if ((Get-Item $OOBE_Config_WinRM ).Length -gt 0) {
     & $OOBE_Config_WinRM
 }
@@ -82,7 +82,7 @@ while (!(Test-Path $OOBE_WinGET_Install) -and $timeout -lt 10) {
     Start-Sleep -Seconds 1
     $timeout++
 }
-# 
+# 
 if ((Get-Item $OOBE_WinGET_Install ).Length -gt 0) {
     & $OOBE_WinGET_Install
 }
@@ -105,4 +105,6 @@ Invoke-WebRequest -URI https://packages.vmware.com/tools/releases/latest/windows
 #   #######################################################################
 #
 Invoke-WebRequest -URI https://github.com/PowerShell/PowerShell/releases/download/v7.6.0/PowerShell-7.6.0-win-x64.msi -OutFile "$env:USERPROFILE\Downloads\PowerShell-7.6.0-win-x64.msi"
+#
+#   Thats all folks
 #

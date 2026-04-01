@@ -16,8 +16,8 @@
 #   19 april 2025
 #
 #   Changelog
-#   Version 5	Powershell
-#   Version 6	Disable Browser Service 
+#   Version 5   Powershell
+#   Version 6   Disable Browser Service 
 #
 Write-Host 'Stop Windows Services'
 Microsoft.Powershell.Management\Stop-Service -Name "wuauserv" -Force
