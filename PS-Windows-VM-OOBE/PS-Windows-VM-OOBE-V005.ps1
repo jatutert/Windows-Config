@@ -130,6 +130,7 @@ do  {
     Write-Host "Download poging $retry..."
 
     # 2. Download het bestand
+    Write-Host 'Downloading Powershell 7'
     Invoke-WebRequest -Uri $Powershell_7_Installer_URL -OutFile $Powershell_7_Installer_MSI
 
     # 3. Check lokale bestandsgrootte
@@ -179,6 +180,7 @@ do  {
     Write-Host "Download poging $retry..."
 
     # 2. Download het bestand
+    Write-Host 'Downloading Microsoft Windows Terminal'
     Invoke-WebRequest -Uri $Windows_Terminal_Installer_URL -OutFile $Windows_Terminal_Installer_MSI
 
     # 3. Check lokale bestandsgrootte
