@@ -1,12 +1,23 @@
 #
-#   Windows Server 2022 Active Directory Domain Services Domain Controller Promotor
-#   Created by John Tutert for TutSOFT
+#   TTTTTT  U    U  TTTTTT  SSSSSS  OOOOOO  FFFFFF  TTTTTT
+#     TT    U    U    TT    SS      O    O  FF        TT
+#     TT    U    U    TT    SSSSSS  O    O  FFFF      TT
+#     TT    U    U    TT        SS  O    O  FF        TT
+#     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
 #
-#   For personal or educational use 
+#   Windows Server 2022 
+#   Active Directory Domain Services Domain Controller Promotor
 #
-
+#   For Personal and/or Education Use Only ! 
+#
+#
+#   03 ARPIL 2026
+#
+#
+#   #### LET OP
 #   Dit script kan pas uitgevoerd worden NA de installatie van feature en vervolgens een herstart
 #   Pas dan is het mogelijk om onderstaande stappen uit te voeren. 
+#   #### LET OP
 
 Write-Host "Importeer de ADDSDeployment module"
 Import-Module ADDSDeployment
