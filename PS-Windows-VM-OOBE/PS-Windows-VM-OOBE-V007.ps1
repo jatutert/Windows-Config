@@ -6,12 +6,12 @@
 #     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
 #
 #   Windows Server 
-#   OOBE
+#   Out of Box Experience 
 #
 #   For Personal and/or Education Use Only ! 
 #
-#
-#   03 ARPIL 2026
+#   VERSIE  007
+#   DATUM   03 ARPIL 2026
 #
 #
 Clear-Host
