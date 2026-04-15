@@ -11,40 +11,52 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   03 ARPIL 2026
+#   10 ARPIL 2026
 #
 #
+# Active Directory module laden
+Import-Module ActiveDirectory
+
 # Pad naar het CSV-bestand
-$csvPath = "$env:USERPROFILE\Desktop\ad_gebruikers.csv"
+$CsvPad = ".\ad_gebruikers.csv"
 
-# Importeren van de CSV
-$users = Import-Csv -Path $csvPath
+# Target container (standaard Users container)
+$TargetOU = "CN=Users,DC=homelab,DC=net"
 
-foreach ($user in $users) {
-    # Samenstellen van de volledige naam en gebruikersnaam
-    $fullName = "$($user.Voornaam) $($user.Achternaam)"
-    $samAccountName = $user.Gebruikersnaam
-    $ou = $user.OU
-    $password = ConvertTo-SecureString $user.Wachtwoord -AsPlainText -Force
+# CSV inlezen
+$Gebruikers = Import-Csv -Path $CsvPad
 
-    # Controleren of gebruiker al bestaat
-    if (-not (Get-ADUser -Filter {SamAccountName -eq $samAccountName} -ErrorAction SilentlyContinue)) {
-        # Gebruiker aanmaken
+foreach ($Gebruiker in $Gebruikers) {
+
+    # Controleren of gebruiker al bestaat (op SamAccountName)
+    $Bestaat = Get-ADUser -Filter "SamAccountName -eq '$($Gebruiker.Gebruikersnaam)'" -ErrorAction SilentlyContinue
+
+    if ($null -eq $Bestaat) {
+
+        # Wachtwoord veilig omzetten naar SecureString
+        $SecurePassword = ConvertTo-SecureString `
+            $Gebruiker.Wachtwoord `
+            -AsPlainText `
+            -Force
+
+        # Nieuwe AD-gebruiker aanmaken
         New-ADUser `
-            -Name $fullName `
-            -GivenName $user.Voornaam `
-            -Surname $user.Achternaam `
-            -SamAccountName $samAccountName `
-            -UserPrincipalName $UserPrincipalName `
-            -AccountPassword $password `
-            -Path $ou `
-            -Enabled $true `
-            -DisplayName $fullName `
-            -Description $Description `
-            -ChangePasswordAtLogon $false
+            -Name              $Gebruiker.DisplayName `
+            -GivenName         $Gebruiker.Voornaam `
+            -Surname           $Gebruiker.Achternaam `
+            -SamAccountName    $Gebruiker.Gebruikersnaam `
+            -UserPrincipalName $Gebruiker.UserPrincipalName `
+            -Department        $Gebruiker.Department `
+            -Title             $Gebruiker.Title `
+            -Description       $Gebruiker.Description `
+            -AccountPassword   $SecurePassword `
+            -Enabled           $true `
+            -Path              $TargetOU `
+            -ChangePasswordAtLogon $true
 
-        Write-Host "Gebruiker $fullName aangemaakt."
-    } else {
-        Write-Host "Gebruiker $fullName bestaat al. Overgeslagen."
+        Write-Host "Gebruiker aangemaakt:" $Gebruiker.Gebruikersnaam -ForegroundColor Green
+    }
+    else {
+        Write-Host "Gebruiker bestaat al:" $Gebruiker.Gebruikersnaam -ForegroundColor Yellow
     }
 }
