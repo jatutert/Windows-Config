@@ -35,6 +35,28 @@
 ::
 ::
 %USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
+
+::
+::  TEMPLATE
+::
+
+::
+::
+::
+:: %USERPROFILE%\Downloads\ViVeTool\ViVeTool
+
+::
+::  TEMPLATE
+::
+
+
+
+::
+:: April 7, 2025
+:: Windows 11 (26120.3671 and 26200.5518).
+::
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:29785184
+%USERPROFILE%\Downloads\ViVeTool\ViVeTool /enable /id:48433719
 ::
 ::
 :: May 23
@@ -414,7 +436,7 @@
 :: https://itstechbased.com/category/windows-11/page/124/
 ::
 ::
-@echo Vergeet NIET om Updates & Downloads uit te voeren in de Windows Store
+@echo NIET VERGETEN Start Windows Store en klik op Downloads en dan op BIJWERKEN
 ::
 @pause
 ::
