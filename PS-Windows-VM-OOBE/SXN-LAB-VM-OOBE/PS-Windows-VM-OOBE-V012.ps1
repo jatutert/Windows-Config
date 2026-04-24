@@ -18,7 +18,7 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   VERSION 014
+#   VERSION 012
 #   DATUM   22 ARPIL 2026
 #
 #
@@ -32,7 +32,7 @@ Clear-Host
 #   TutSOFT Windows Register Sleutel aanmaken
 #   #######################################################################
 #
-Write-Host "[1/15] Registersleutel aanmaken ..." -ForegroundColor Yellow
+Write-Host "[1/7] TutSOFT Registersleutel aanmaken ..." -ForegroundColor Yellow
 #
 New-Item -Path "HKCU:\Software\TutSOFT" -Force | Out-Null
 #
@@ -41,7 +41,7 @@ New-Item -Path "HKCU:\Software\TutSOFT" -Force | Out-Null
 #   TutSOFT OOBE Directory aanmaken 
 #   #######################################################################
 #
-Write-Host "[2/15] Script directories aanmaken ..." -ForegroundColor Yellow
+Write-Host "[2/7] TutSOFT OOBE directories aanmaken ..." -ForegroundColor Yellow
 #
 mkdir "$env:USERPROFILE\.TutSOFT" -Force | Out-Null
 mkdir "$env:USERPROFILE\.TutSOFT\OOBE" -Force | Out-Null
@@ -60,7 +60,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "OOBE Directories" -Value 
 #   #######################################################################
 #
 #
-Write-Host "[3/15] SSH Server installeren en configureren..." -ForegroundColor Yellow
+Write-Host "[3/7] SSH Server installeren en configureren..." -ForegroundColor Yellow
 #
 $OOBE_Config_SSH = "$env:USERPROFILE\.TutSOFT\OOBE\SSH\VM-OOBE-Config-SSH-Latest.ps1"
 #
@@ -84,7 +84,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Windows SSH" -Value 1 -Pr
 #   #######################################################################
 #
 #
-Write-Host "[4/15] Windows Services stoppen en uitschakelen..." -ForegroundColor Yellow
+Write-Host "[4/7] Windows Services stoppen en uitschakelen..." -ForegroundColor Yellow
 #
 $OOBE_Config_Services = "$env:USERPROFILE\.TutSOFT\OOBE\winservices\VM-OOBE-Config-Services-Latest.ps1"
 #
@@ -108,7 +108,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Windows Services" -Value 
 #   #######################################################################
 #
 #
-Write-Host "[4/15] Windows WinRM service activeren en configureren..." -ForegroundColor Yellow
+Write-Host "[4/7] Windows WinRM service activeren en configureren..." -ForegroundColor Yellow
 #
 $OOBE_Config_WinRM = "$env:USERPROFILE\.TutSOFT\OOBE\winrm\VM-OOBE-Windows-WinRM-Config-Latest.ps1"
 #
@@ -131,9 +131,6 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Windows WinRM" -Value 1 -
 #   WinGET Deel 1 van 2 
 #   #######################################################################
 #
-#
-Write-Host "[5/15] WinGET Installeren ..." -ForegroundColor Yellow
-#
 $OOBE_WinGET_Install = "$env:USERPROFILE\.TutSOFT\OOBE\winget\VM-OOBE-winget-install-Latest.ps1"
 #
 Invoke-WebRequest -URI https://raw.githubusercontent.com/asheroto/winget-install/master/winget-install.ps1 -OutFile $OOBE_WinGET_Install
@@ -155,7 +152,8 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Winget Install" -Value 1 
 #   #######################################################################
 #
 #
-Write-Host "[6/15] VMware Tools installeren ..." -ForegroundColor Yellow
+Write-Host 'VMWare Tools'
+#
 #
 $VMWARE_Tools_Installer = "$env:USERPROFILE\Downloads\vmware\VMware-tools-13.0.10-25056151-x64.exe"
 #
@@ -175,7 +173,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "VMware Tools" -Value 1 -P
 #   #######################################################################
 #
 #
-Write-Host "[7/15] WinGet Licensie activieren ..." -ForegroundColor Yellow
+Write-Host 'Accept License Terms Winget'
 #
 cmd.exe /c "echo Y | winget list"
 #
@@ -187,7 +185,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Winget License" -Value 1 
 #   #######################################################################
 #
 #
-Write-Host "[8/15] Powershell 7 installeren ..." -ForegroundColor Yellow
+Write-Host 'Powershell 7 install'
 #
 winget install Microsoft.Powershell
 #
@@ -197,8 +195,6 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Powershell 7 Install" -Va
 #   Powershell 7 Remote
 #   #######################################################################
 #
-#
-Write-Host "[9/15] Powershell 7 configureren ..." -ForegroundColor Yellow
 #
 pwsh -c Enable-PSRemoting -Force
 pwsh -c Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
@@ -212,7 +208,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Powershell 7 Remote" -Val
 #   #######################################################################
 #
 #
-Write-Host "[10/15] [WinGet] Microsoft Windows Terminal installeren ..." -ForegroundColor Yellow
+Write-Host 'Windows Terminal install'
 #
 winget install Microsoft.WindowsTerminal
 #
@@ -223,7 +219,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Windows Terminal Install"
 #   #######################################################################
 #
 #
-Write-Host "[11/15] [WinGet] Nano installeren ..." -ForegroundColor Yellow
+Write-Host 'GNU Nano install'
 #
 winget install GNU.Nano
 #
@@ -235,7 +231,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "Nano Install" -Value 1 -P
 #   #######################################################################
 #
 #
-Write-Host "[12/15] [WinGet] PatchMyPC installeren ..." -ForegroundColor Yellow
+Write-Host 'PatchMyPC install'
 #
 winget Install PatchMyPC.PatchMyPC
 #
@@ -246,8 +242,7 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "PatchMyPC Install" -Value
 #   WinGET Devolutions.UniGetUI
 #   #######################################################################
 #
-#
-Write-Host "[13/15] [WinGet] UniGetUI installeren ..." -ForegroundColor Yellow
+Write-Host 'UniGetUI install'
 #
 winget Install Devolutions.UniGetUI
 #
@@ -258,8 +253,6 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "UniGetUI Install" -Value 
 #   TutSOFT Configuratie scripts en bestanden 
 #   #######################################################################
 #
-#
-Write-Host "[14/15] Configuratie scripts downloaden ..." -ForegroundColor Yellow
 #
 #   ###########################################
 #   TutSOFT SF Active Directory Domain Services
@@ -295,8 +288,6 @@ New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "ADDS Scripts" -Value 1 -P
 #   EINDE VM OOBE SCRIPT
 #   #######################################################################
 #
-#
-Write-Host "[15/15] Einde Script ..." -ForegroundColor Yellow
 #
 New-ItemProperty -Path "HKCU:\Software\TutSOFT" -Name "OOBE Finish" -Value 1 -PropertyType DWord -Force | Out-Null
 #
