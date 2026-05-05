@@ -305,6 +305,16 @@ winget install Microsoft.Sysinternals.Suite
 #
 #
 #   ####################
+#   Microsoft.Teams Removal
+#   ####################
+#
+#
+Write-Host "[WinGET] Microsoft.Teams Remove" -ForegroundColor Gray
+#
+winget uninstall Microsoft.Teams
+#
+#
+#   ####################
 #   Windows Terminal
 #   ####################
 #
