@@ -12,13 +12,21 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
+
+
+#   ##################################################################
+#   AD JOIN
+#   ##################################################################
+
+
+
 #   =========================
 #   Definitie Parameters
 #   =========================
 #
 #
 $DomainName = "homelab.net"
-$DomainUser = "HOMELAB\Administrator"
+$DomainUser = "HOMELAB\labadmin"
 $PlainPassword = "!@WACHTwoord#$"
 #
 #
