@@ -26,7 +26,7 @@
 #
 #
 $DomainName = "homelab.net"
-$DomainUser = "HOMELAB\labadmin"
+$DomainUser = "HOMELAB\administrator"
 $PlainPassword = "!@WACHTwoord#$"
 #
 #
