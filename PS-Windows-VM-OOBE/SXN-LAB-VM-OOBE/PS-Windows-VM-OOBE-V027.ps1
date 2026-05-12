@@ -21,15 +21,15 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   VERSION 028
-#   12 MEI 2026
+#   VERSION 027
+#   10 MEI 2026
 #
 #
 Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 28" -ForegroundColor Green
+Write-Host "Version 27" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #
@@ -241,17 +241,9 @@ ForEach-Object {
 #
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -eq 1) {
-
     Write-Host "Nieuwsfeed uitzetten Windows Desktop"
-
-    New-Item -Path "HKLM:\Software\Policies\Microsoft\Dsh" -Force | Out-Null
-
-    Set-ItemProperty `
-        -Path "HKLM:\Software\Policies\Microsoft\Dsh" `
-        -Name "AllowNewsAndInterests" `
-        -Type DWord `
-        -Value 0
-
+    cmd.exe /c "reg add HKCU\Software\Policies\Microsoft\Windows\Explorer /v HideFeeds /t REG_DWORD /d 1 /f"
+    cmd.exe /c "reg add HKLM\Software\Policies\Microsoft\Windows\Explorer /v HideFeeds /t REG_DWORD /d 1 /f"
 }
 #
 #
@@ -564,38 +556,6 @@ $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -ne 1) {
     Install-WindowsFeature -Name "RSAT-AD-PowerShell" -IncludeAllSubFeature
 }
-
-#
-#
-#   ###################
-#   Powershell Azure
-#   ###################
-#
-#
-
-Write-Host "[Powershell 5] Installeren Azure modules (duurt soms erg lang) ..."
-
-Set-PSRepository -Name PSGallery -InstallationPolicy Trusted 
-Install-Module -Name Az -Repository PSGallery -Force
-
-Write-Host "[Powershell 7] Installeren Azure modules (duurt soms erg lang) ..."
-
-pwsh -c Set-PSRepository -Name PSGallery -InstallationPolicy Trusted 
-pwsh -c Install-Module -Name Az -Repository PSGallery -Force
-
-#
-#
-#   ###################
-#   Powershell Help
-#   ###################
-#
-#
-
-Write-Host "[Powershell] Help bijwerken ..."
-
-Update-Help -force -ea 0
-
-pwsh -c Update-Help -force -ea 0
 
 
 #
