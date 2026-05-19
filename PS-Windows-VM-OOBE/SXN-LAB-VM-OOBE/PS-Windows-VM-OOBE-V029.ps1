@@ -8,7 +8,6 @@
 #     TT    U    U    TT        SS  O    O  FF        TT
 #     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
 #
-#     The Netherlands/Nederland/Niederlande/Pays Bas/Paisos Bajos
 #
 #
 #
@@ -22,15 +21,15 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   VERSION 030
-#   19 MEI 2026
+#   VERSION 029
+#   14 MEI 2026
 #
 #
 Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 30" -ForegroundColor Green
+Write-Host "Version 29" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #
@@ -59,14 +58,9 @@ else {
 #   ###########################################
 #
 #
-Try { 
-    mkdir "$env:USERPROFILE\.TutSOFT" -Force | Out-Null
-    mkdir "$env:USERPROFILE\.TutSOFT\OOBE" -Force | Out-Null
-    mkdir "C:\Scripts" -Force | Out-Null
-}
-Catch {
-Write-Host "Directories konden niet worden gemaakt!"
-} 
+mkdir "$env:USERPROFILE\.TutSOFT" -Force | Out-Null
+mkdir "$env:USERPROFILE\.TutSOFT\OOBE" -Force | Out-Null
+mkdir "C:\Scripts" -Force | Out-Null
 #
 #
 #   ###########################################
@@ -581,51 +575,15 @@ cmd /c "echo Deel 3 Installeren mbv Winget afgerond >> c:\Scripts\VM-OOBE-LOG.tx
 #
 #
 #   ###################
-#   Powershell NuGet provider en PowerShellGet bijwerken
-#   ###################
-#
-#
-
-#
-#   https://oneuptime.com/blog/post/2026-02-16-how-to-troubleshoot-azure-powershell-module-installation-and-authentication-errors/view
-#
-
-Write-Host "[Powershell 5] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
-#
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-Install-Module -Name PowerShellGet -Force -AllowClobber
-
-Write-Host "[Powershell 7] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
-#
-pwsh -c Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-pwsh -c Install-Module -Name PowerShellGet -Force -AllowClobber
-
-#
-#
-#   ###################
 #   Powershell 7 Remote Config 
 #   ###################
 #
 #
-Write-Host "[Powershell 5] Remote configureren ..." -ForegroundColor White
-#
-Enable-PSRemoting -Force
-
-#
 Write-Host "[Powershell 7] Remote configureren ..." -ForegroundColor White
 #
 pwsh -c Enable-PSRemoting -Force
-
-#
-Write-Host "[Windows Firewall] WinRM configureren ..." -ForegroundColor White
-#
-
-#   WinRM HTTP
 pwsh -c Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
-
-#   WinRM HTTPS
-pwsh -c New-NetFirewallRule -Name "WinRM HTTPS" -DisplayName "WinRM HTTPS" -Protocol TCP -LocalPort 5986 -Action Allow
-
+#   pwsh -c Set-NetFirewallRule -Name 'WINRM-HTTPS-In-TCP' -RemoteAddress Any
 #
 #
 #   ###################
