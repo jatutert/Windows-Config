@@ -22,7 +22,7 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   VERSION 030
+#   VERSION 031
 #   19 MEI 2026
 #
 #
@@ -30,7 +30,7 @@ Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 30" -ForegroundColor Green
+Write-Host "Version 31" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #

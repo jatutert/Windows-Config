@@ -22,15 +22,15 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   VERSION 030
-#   19 MEI 2026
+#   VERSION 032
+#   16 juli 2026
 #
 #
 Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 30" -ForegroundColor Green
+Write-Host "Version 32" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #
@@ -179,12 +179,16 @@ $hostname = $env:COMPUTERNAME
 # Bepaal IP- en DNS-instellingen op basis van hostname
 switch ($hostname) {
     'SXN-DB-01' {
-        $newIp  = '192.168.40.101'
+        $newIp  = '192.168.40.110'
         $dnsSrv = '192.168.40.100'
     }
     'SXN-DC-01' {
         $newIp  = '192.168.40.100'
         $dnsSrv = $null   # Geen DNS-instelling aanpassen
+    }
+    'SXN-RD-01' {
+        $newIp  = '192.168.40.120'
+        $dnsSrv = '192.168.40.100'
     }
     'SXN-WS-01' {
         $newIp  = '192.168.40.10'
@@ -578,6 +582,22 @@ cmd /c "echo Deel 3 Installeren mbv Winget afgerond >> c:\Scripts\VM-OOBE-LOG.tx
 #   DEEL 4 Powershell klaarmaken voor gebruik
 #   ###########################################
 #   ###########################################
+
+
+#
+#
+#   ###################
+#   Powershell Basisinstellingen aanpassen 
+#   ###################
+#
+#
+
+#   Powershell Gallery vetrouwen 
+Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+#   TLS protocol versie 1.2 
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+
 #
 #
 #   ###################
@@ -592,18 +612,31 @@ cmd /c "echo Deel 3 Installeren mbv Winget afgerond >> c:\Scripts\VM-OOBE-LOG.tx
 
 Write-Host "[Powershell 5] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
 #
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
 Install-Module -Name PowerShellGet -Force -AllowClobber
+Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 
 Write-Host "[Powershell 7] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
 #
-pwsh -c Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
 pwsh -c Install-Module -Name PowerShellGet -Force -AllowClobber
+pwsh -c Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
+
 
 #
 #
 #   ###################
-#   Powershell 7 Remote Config 
+#   Powershell Windows Updates installeren
+#   ###################
+#
+#
+
+Install-Module -Name PSWindowsUpdate -Force
+Import-Module PSWindowsUpdate
+
+#
+#
+#   ###################
+#   Powershell Remote Config 
 #   ###################
 #
 #
@@ -621,10 +654,19 @@ Write-Host "[Windows Firewall] WinRM configureren ..." -ForegroundColor White
 #
 
 #   WinRM HTTP
-pwsh -c Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
+Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
 
 #   WinRM HTTPS
-pwsh -c New-NetFirewallRule -Name "WinRM HTTPS" -DisplayName "WinRM HTTPS" -Protocol TCP -LocalPort 5986 -Action Allow
+
+New-NetFirewallRule `
+  -Name "WinRM HTTPS" `
+  -DisplayName "WinRM HTTPS" `
+  -Direction Inbound `
+  -Protocol TCP `
+  -LocalPort 5986 `
+  -Action Allow `
+  -Profile Domain,Private `
+  -Service WinRM
 
 #
 #
@@ -712,7 +754,7 @@ cmd /c "echo Deel 4 Powershell Configuratie is gereed >> c:\Scripts\VM-OOBE-LOG.
 #
 #
 mkdir "C:\Scripts" -Force | Out-Null
-Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WC11-WS22-AD-Join.ps1 -OutFile "C:\Scripts\WC11-WS22-AD-Join.ps1"
+Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WC11-WS22-SXN-AD-Join.ps1 -OutFile "C:\Scripts\WC11-WS22-SXN-AD-Join.ps1"
 #
 #
 #
@@ -731,10 +773,10 @@ Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config
 #
 #
 mkdir "C:\Scripts" -Force | Out-Null
-Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-AD-DC-Install.ps1 -OutFile "C:\Scripts\WS22-AD-DC-Install.ps1" 
-Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-AD-DC-Promote.ps1 -OutFile "C:\Scripts\WS22-AD-DC-Promote.ps1" 
-#   Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-AD-DC-Import-Users.ps1 -OutFile "C:\Scripts\WS22-AD-DC-Import-Users.ps1" 
-Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-AD-DC-Import-Users-OU.ps1 -OutFile "C:\Scripts\WS22-AD-DC-Import-Users-OU.ps1" 
+Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-SXN-AD-DC-Install.ps1 -OutFile "C:\Scripts\WS22-SXN-AD-DC-Install.ps1" 
+Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-SXN-AD-DC-Promote.ps1 -OutFile "C:\Scripts\WS22-SXN-AD-DC-Promote.ps1" 
+#   Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-SXN-AD-DC-Import-Users.ps1 -OutFile "C:\Scripts\WS22-SXN-AD-DC-Import-Users.ps1" 
+Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/WS22-SXN-AD-DC-Import-Users-OU.ps1 -OutFile "C:\Scripts\WS22-SXN-AD-DC-Import-Users-OU.ps1" 
 Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/ad_gebruikers.csv -OutFile "C:\Scripts\ad_gebruikers.csv" 
 #
 #
@@ -826,6 +868,22 @@ if ($osInfo.ProductType -ne 1) {
     #
     #
 }
+
+#
+#
+#   ###########################################
+#   Installeren Windows Updates
+#   ###########################################
+#
+#
+#   x
+#   x
+#   x
+#
+#
+
+Get-WindowsUpdate -Install -AcceptAll -IgnoreReboot
+
 #
 #
 #   ###########################################
