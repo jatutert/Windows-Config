@@ -11,7 +11,7 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   16 juli 2026
+#   22 juli 2026
 #
 #
 #   #### LET OP
@@ -19,11 +19,35 @@
 #   Pas dan is het mogelijk om onderstaande stappen uit te voeren. 
 #   #### LET OP
 
+Clear-Host
+Write-Host "Active Directory Domain Services Domain Controller Promotor Script"
+Write-Host "Created by TutSOFT for Personal and / or Educational use only !"
+Write-Host ""
 Write-Host "Importeer de ADDSDeployment module"
 Import-Module ADDSDeployment
+Write-Host ""
+
+# Standaard waarde Domain Name
+$DomainName = "ccshomelab.net"
+
+# Studentnummer toevoegen aan Domain Name
+do {
+    $StudentNumber = Read-Host "Voer je 6-cijferige studentnummer in om toe te voegen aan Domain Name"
+
+    if ($StudentNumber -match '^\d{6}$') {
+        $ValidInput = $true
+    }
+    else {
+        Write-Host "Fout: voer exact 6 cijfers in." -ForegroundColor Red
+        $ValidInput = $false
+    }
+}
+while (-not $ValidInput)
+
 
 # Parameters
-$DomainName = "ccshomelab.net"
+
+$DomainName = "homelab$StudentNumber.net"
 $PlainPassword = "!@WACHTwoord#$"
 $SecurePassword = ConvertTo-SecureString $PlainPassword -AsPlainText -Force
 
