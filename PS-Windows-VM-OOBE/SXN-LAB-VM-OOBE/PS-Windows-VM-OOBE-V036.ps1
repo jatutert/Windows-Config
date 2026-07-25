@@ -9,29 +9,28 @@
 #     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
 #
 #     The Netherlands/Nederland/Niederlande/Pays Bas/Paisos Bajos
-#     NL EU
 #
 #
 #
-#     Windows Desktop and Windows Server 
-#     Out of Box Experience Configurator
+#   Windows Desktop and Windows Server 
+#   Out of Box Experience Configurator
 #
 #
-#     Makes your Windows Desktop or Windows Server ready for any use ! 
+#   Makes your Windows ready for any use ! 
 #
 #
-#     For Personal and/or Education Use Only ! 
+#   For Personal and/or Education Use Only ! 
 #
 #
-#     VERSION 035
-#     24 juli 2026
+#   VERSION 036
+#   25 juli 2026
 #
 #
 Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 35" -ForegroundColor Green
+Write-Host "Version 36" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #
@@ -41,7 +40,7 @@ Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundC
 #
 #
 #   ###########################################
-#   STAP 1 Bepalen huidige desktop of server uitvoering Windows
+#   STAP 1 Bepalen Windows Desktop of Windows Server 
 #   ###########################################
 #
 #
@@ -53,6 +52,8 @@ if ($osInfo.ProductType -ne 1) {
 else {
     Write-Host "This virtual machine runs Windows Desktop" -ForegroundColor Green
 }
+#
+echo "STAP 1 Bepalen Windows Desktop of Windows Server voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt
 #
 #
 #   ###########################################
@@ -70,11 +71,22 @@ Write-Host "Directories konden niet worden gemaakt!"
 }
 #
 #
-cmd /c "echo STAP 2 Hulpdirectories afgerond >> c:\Scripts\VM-OOBE-LOG.txt" 
+echo "STAP 2 Hulpdiretories maken voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt
 #
 #
 #   ###########################################
-#   STAP 3 VMWare Tools installeren zodat verbinding met de buitenwereld aanwezig is voor de huidige VM
+#   STAP 3 Downloaden Script
+#   ###########################################
+#
+#
+Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-VM-OOBE/SXN-LAB-VM-OOBE/PS-Windows-VM-OOBE-Latest.ps1 -OutFile C:\Scripts\PS-Windows-VM-OOBE-Latest.ps1
+#
+#
+echo "STAP 3 Downloaden Script naar directory Scripts voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt
+#
+#
+#   ###########################################
+#   STAP 4 VMWare Tools installeren zodat verbinding met de buitenwereld aanwezig is voor de huidige VM
 #   ###########################################
 #
 #
@@ -92,18 +104,11 @@ else {
 }
 #
 #
-cmd /c "echo Stap 3 VMWare Tools afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
-#
-#
-#   ###########################################
-#   ###########################################
-#   DEEL 2 Configuratie 
-#   ###########################################
-#   ###########################################
+echo "STAP 4 VMWare Tools installeren voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt
 #
 #
 #   ######################
-#   STAP 4 Gebruiker Administrator vrijgeven op Windows Server
+#   STAP 5 Gebruiker Administrator vrijgeven op Windows Server
 #   ######################
 #
 #
@@ -111,7 +116,7 @@ $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -ne 1) {
     #
     #
-    Write-Host "Gebruiker Administrator op Windows Server vrijgeven"   -ForegroundColor Gray
+    Write-Host "STap 5 Gebruiker Administrator op Windows Server vrijgeven"   -ForegroundColor Gray
     #
     Enable-LocalUser -Name "Administrator"
     $Password = ConvertTo-SecureString "!@WACHTwoord#$" -AsPlainText -Force
@@ -128,15 +133,15 @@ if ($osInfo.ProductType -ne 1) {
 }
 #
 #
-cmd /c "echo Stap 4 Gebruiker Administrator vrijgeven Afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
+echo "STAP 5 Gebruiker Administrator vrijgeven voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ######################
-#   Stap 5 Windows Services
+#   STAP 6 Windows Services Uitschakelen 
 #   ######################
 #
 #
-Write-Host "Stap 5 Windows Services stoppen en ook uitschakelen om geheugen te besparen ..." -ForegroundColor Gray
+Write-Host "Stap 6 Windows Services stoppen en ook uitschakelen om geheugen te besparen ..." -ForegroundColor Gray
 #
 mkdir "$env:USERPROFILE\.TutSOFT\OOBE\winservices" -Force | Out-Null
 $OOBE_Config_Services = "$env:USERPROFILE\.TutSOFT\OOBE\winservices\VM-OOBE-Config-Services-Latest.ps1"
@@ -170,17 +175,18 @@ if ($osInfo.ProductType -eq 1) {
 }
 #
 #
-cmd /c "echo Stap 5 Windows Services aanpassen afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
+echo "STAP 6 Windows Services uitschakelen voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ######################
-#   Stap 6 IP Adres en DNS Instellingen 
+#   Stap 7 IP Adres en DNS Instellingen 
 #   ######################
 #
 #
-Write-Host "Stap 6 IP-Adres en DNS-instellingen aanpassen"
+Write-Host "Stap 7 IP-Adres en DNS-instellingen aanpassen"
 #
 #
+
 # Zoek de netwerkadapter met een IPv4-adres dat begint met 10.
 $AdapterConfig = Get-NetIPAddress -AddressFamily IPv4 |
     Where-Object { $_.IPAddress -like '10.*' } |
@@ -200,8 +206,8 @@ if ($AdapterConfig) {
     $Octets = $CurrentIP.Split('.')
     $NetworkBase = "$($Octets[0]).$($Octets[1]).$($Octets[2])"
 
-    # DNS-server krijgt altijd .101 als laatste octet
-    $DnsServer = "$NetworkBase.101"
+    # DNS-server krijgt altijd .200 als laatste octet
+    $DnsServer = "$NetworkBase.200"
 
     # Bepaal nieuw IP-adres op basis van hostname
     $ComputerName = $env:COMPUTERNAME.ToUpper()
@@ -227,71 +233,55 @@ if ($AdapterConfig) {
 
         Write-Host "Nieuw IP-adres wordt: $NewIP"
 
-        try {
+        # Bepaal huidige default gateway (indien aanwezig)
+        $Gateway = (
+            Get-NetRoute -InterfaceIndex $InterfaceIndex `
+                         -DestinationPrefix "0.0.0.0/0" |
+            Sort-Object RouteMetric |
+            Select-Object -First 1
+        ).NextHop
 
-            # Bepaal huidige default gateway
-            $Gateway = (
-                Get-NetRoute -InterfaceIndex $InterfaceIndex `
-                    -DestinationPrefix "0.0.0.0/0" `
-                    -ErrorAction SilentlyContinue |
-                Sort-Object RouteMetric |
-                Select-Object -First 1
-            ).NextHop
+        #
+        #   Verwijder bestaande statische IPv4-adressen
+        #
 
-            # Verwijder bestaande statische IPv4-adressen
-            Get-NetIPAddress -InterfaceIndex $InterfaceIndex `
-                -AddressFamily IPv4 `
-                -ErrorAction SilentlyContinue |
-                Where-Object { $_.PrefixOrigin -eq 'Manual' } |
-                Remove-NetIPAddress -Confirm:$false -ErrorAction SilentlyContinue
+        Get-NetIPAddress -InterfaceIndex $InterfaceIndex -AddressFamily IPv4 |
+            Where-Object { $_.PrefixOrigin -eq 'Manual' } |
+            Remove-NetIPAddress -Confirm:$false
 
-            Start-Sleep -Seconds 2
+        # Wacht kort zodat Windows de wijzigingen verwerkt
+        Start-Sleep -Seconds 2
 
-            # Stel nieuw IP-adres in
-            if ($Gateway) {
-                New-NetIPAddress `
-                    -InterfaceIndex $InterfaceIndex `
-                    -IPAddress $NewIP `
-                    -PrefixLength $PrefixLength `
-                    -DefaultGateway $Gateway `
-                    -ErrorAction Stop
-            }
-            else {
-                New-NetIPAddress `
-                    -InterfaceIndex $InterfaceIndex `
-                    -IPAddress $NewIP `
-                    -PrefixLength $PrefixLength `
-                    -ErrorAction Stop
-            }
 
-            Write-Host "IP-adres ingesteld op $NewIP"
+        #
+        #   Stel nieuw statisch IP-adres in
+        #
 
-            # Alleen voor servers die geen DC zijn
-            if ($ComputerName -ne 'SXN-DC-01') {
-
-                try {
-                    Set-DnsClientServerAddress `
-                        -InterfaceIndex $InterfaceIndex `
-                        -ServerAddresses $DnsServer `
-                        -ErrorAction Stop
-
-                    Write-Host "DNS-server ingesteld op $DnsServer"
-                }
-                catch {
-                    Write-Warning "DNS-server kon niet worden ingesteld."
-                    Write-Warning $_.Exception.Message
-                }
-            }
-            else {
-                Write-Host "DNS-configuratie overgeslagen voor $ComputerName"
-            }
-
-            Write-Host "Netwerkconfiguratie voltooid."
+        if ($Gateway) {
+            New-NetIPAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -IPAddress $NewIP `
+                -PrefixLength $PrefixLength `
+                -DefaultGateway $Gateway
         }
-        catch {
-            Write-Warning "Netwerkconfiguratie is mislukt."
-            Write-Warning $_.Exception.Message
+        else {
+            New-NetIPAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -IPAddress $NewIP `
+                -PrefixLength $PrefixLength
         }
+
+        # Configureer DNS indien hostname NIET SXN-DC-01 is
+        if ($ComputerName -ne 'SXN-DC-01') {
+
+            Set-DnsClientServerAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -ServerAddresses $DnsServer
+
+            Write-Host "DNS-server ingesteld op $DnsServer"
+        }
+
+        Write-Host "Netwerkconfiguratie voltooid."
     }
 }
 else {
@@ -302,8 +292,12 @@ else {
 
 }
 #
+#
+echo "STAP 7 IP Adres instellingen aanpassen voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
 #   ######################
-#   Netwerkkaart 1 van Publiek naar Privaat zetten voor netwerkprofiel 
+#   Stap 8 Netwerkkaart 1 van Publiek naar Privaat zetten voor netwerkprofiel 
 #   ######################
 #
 #
@@ -318,8 +312,11 @@ ForEach-Object {
 }
 #
 #
+echo "STAP 8 Netwerkkaart 1 van Publiek naar Privaat zetten voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
 #   ####################
-#   Windows Policies
+#   Stap 9 Windows Desktop Policies instellen 
 #   ####################
 #
 #   Windows Desktop
@@ -340,18 +337,11 @@ if ($osInfo.ProductType -eq 1) {
 }
 #
 #
-cmd /c "echo Deel 2 Configuratie Afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
-#
-#
-#   ###########################################
-#   ###########################################
-#   DEEL 3 Installatie
-#   ###########################################
-#   ###########################################
+echo "STAP 9 Windows Desktop Policies instellen voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ####################
-#   WinGET Stap 1 van 2 
+#   Stap 10A WinGET Stap 1 van 2 
 #   ####################
 #
 #
@@ -372,11 +362,11 @@ if ((Get-Item $OOBE_WinGET_Install ).Length -gt 0) {
 }
 #
 #
-cmd /c "echo WinGet Stap 1 van 2 afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
+echo "STAP 10A WinGet Stap 1 van 2 voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ####################
-#   WinGET Stap 2 van 2 Licentie Activeren
+#   Stap 10B WinGET Stap 2 van 2 Licentie Activeren
 #   ####################
 #
 #
@@ -385,31 +375,34 @@ Write-Host "[WinGet] Licentie activeren ..." -ForegroundColor White
 cmd.exe /c "echo Y | winget list"
 #
 #
-cmd /c "echo WinGet Stap 2 van 2 afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
+echo "STAP 10B WinGet Stap B van 2 voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ####################
-#   Winget gebruiken om diverse onderdelen bij te werken of nieuwe installaties te doen
+#   STAP 11 Installaties Runtimes
 #   ####################
 #
 #
+echo "STAP 11 Installatie Runtimes met behulp van WinGet gestart" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
 #   ####################
-#   WinGET DotNET DesktopRuntime
+#   Stap 11A WinGET DotNET DesktopRuntime
 #   ####################
 #
 #
-Write-Host "DotNet Runtime installeren"
+Write-Host "Stap 11A DotNet Runtime installeren"
 #
 winget install Microsoft.DotNet.DesktopRuntime.8.x86 --scope machine --accept-package-agreements --accept-source-agreements
 winget install Microsoft.DotNet.DesktopRuntime.8.x64 --scope machine --accept-package-agreements --accept-source-agreements
 #
 #
 #   ####################
-#   WinGET VCRedist
+#   Stap 11B WinGET VCRedist
 #   ####################
 #
 #
-Write-Host "Visual C Runtime installeren"
+Write-Host "Stap 11B Visual C Runtime installeren"
 #
 winget install Microsoft.VCRedist.2005.x64 --scope machine --accept-package-agreements --accept-source-agreements
 winget install Microsoft.VCRedist.2008.x64 --scope machine --accept-package-agreements --accept-source-agreements
@@ -420,12 +413,18 @@ winget install Microsoft.VCRedist.2015+.x86 --scope machine --accept-package-agr
 winget install Microsoft.VCRedist.2015+.x64 --scope machine --accept-package-agreements --accept-source-agreements
 #
 #
+echo "STAP 11 Installatie Runtimes met behulp van WinGet voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
 #   ###########################################
-#   WinGET Applicaties 
+#   STAP 12 WinGET Verwijderen Applicaties 
 #   ###########################################
 #
 #
-Write-Host "[WinGet] Applicaties installeren ..." -ForegroundColor White
+echo "STAP 12 Applicaties verwijderen Windows Desktop mbv WinGet gestart" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
+Write-Host "STAP 12 Applicaties verwijderen Windows Desktop mbv Winget gestart" -ForegroundColor White
 #
 #
 #   Windows Desktop
@@ -433,16 +432,6 @@ Write-Host "[WinGet] Applicaties installeren ..." -ForegroundColor White
 #
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -eq 1) {
-    #
-    #
-    #   ####################
-    #   NanaZIP
-    #   ####################
-    #
-    #
-    Write-Host "[WinGet] M2Team.NanaZip" -ForegroundColor Gray
-    #
-    winget install M2Team.NanaZip
     #
     #
     #   ####################
@@ -476,12 +465,44 @@ if ($osInfo.ProductType -eq 1) {
     winget uninstall Microsoft.Teams
     #
     #
+} 
+#
+#
+echo "STAP 12 Applicaties verwijderen Windows Desktop mbv WinGet voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
+#   ###########################################
+#   STAP 13 WinGET Installeren Applicaties Windows Desktop
+#   ###########################################
+#
+#
+echo "STAP 13 Applicaties installeren mbv Winget op Windows Desktop gestart" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
+Write-Host "STAP 13 Applicaties installeren mbv Winget op Windows Desktop gestart" -ForegroundColor White
+#
+#
+#   Windows Desktop
+#
+#
+$osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
+if ($osInfo.ProductType -eq 1) {
+    #
+    #
+    #   ####################
+    #   NanaZIP
+    #   ####################
+    #
+    #
+    Write-Host "[STAP 13A] M2Team.NanaZip" -ForegroundColor Gray
+    #
+    winget install M2Team.NanaZip
     #   ####################
     #   PatchMyPC
     #   ####################
     #
     #
-    Write-Host "[WinGet] PatchMyPC" -ForegroundColor Gray
+    Write-Host "[Stap 13B] PatchMyPC" -ForegroundColor Gray
     #
     winget Install PatchMyPC.PatchMyPC
     #
@@ -491,19 +512,9 @@ if ($osInfo.ProductType -eq 1) {
     #   ####################
     #
     #
-    Write-Host "[WinGET] Microsoft.PowerToys" -ForegroundColor Gray
+    Write-Host "[Stap 13C] Microsoft.PowerToys" -ForegroundColor Gray
     #
     winget install Microsoft.PowerToys
-    #
-    #
-    #   ####################
-    #   Microsoft.Teams Removal
-    #   ####################
-    #
-    #
-    Write-Host "[WinGET] Microsoft.Teams Remove" -ForegroundColor Gray
-    #
-    winget uninstall Microsoft.Teams
     #
     #
     #   ####################
@@ -511,7 +522,7 @@ if ($osInfo.ProductType -eq 1) {
     #   ####################
     #
     #
-    Write-Host "[WinGet] UniGetUI" -ForegroundColor Gray
+    Write-Host "[Stap 13D] UniGetUI" -ForegroundColor Gray
     #
     winget Install Devolutions.UniGetUI
     #
@@ -521,20 +532,31 @@ if ($osInfo.ProductType -eq 1) {
     #   ####################
     #
     #
-    Write-Host "[WinGet] Microsoft Visual Studio Code" -ForegroundColor Gray
+    Write-Host "[Stap 13E] Microsoft Visual Studio Code" -ForegroundColor Gray
     #
     winget Install Microsoft.VisualStudioCode
 }
 #
 #
-#   Winget Windows Desktop en Windows Server
+echo "STAP 13 Applicaties installeren mbv Winget op Windows Desktop voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
+#   ###########################################
+#   STAP 14 WinGET Installeren Applicaties Windows Desktop en Windows Server
+#   ###########################################
+#
+#
+echo "STAP 14 Applicaties installeren mbv Winget gestart" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
+Write-Host "STAP 14 Applicaties installeren mbv Winget gestart" -ForegroundColor White
 #
 #
 #   ####################
 #   cURL
 #   ####################
 #
-Write-Host "[WinGet] CURL" -ForegroundColor Gray
+Write-Host "[Stap 14A] CURL" -ForegroundColor Gray
 #
 winget install cURL.cURL --scope machine --accept-package-agreements --accept-source-agreements
 #
@@ -543,7 +565,7 @@ winget install cURL.cURL --scope machine --accept-package-agreements --accept-so
 #   Microsoft.Edit
 #   ####################
 #
-Write-Host "[WinGet] Microsoft.Edit" -ForegroundColor Gray
+Write-Host "[Stap 14B] Microsoft.Edit" -ForegroundColor Gray
 #
 winget install Microsoft.Edit --scope machine --accept-package-agreements --accept-source-agreements
 #
@@ -552,7 +574,7 @@ winget install Microsoft.Edit --scope machine --accept-package-agreements --acce
 #   Mozilla Firefox
 #   ####################
 #
-Write-Host "[WinGet] Mozilla.Firefox.nl" -ForegroundColor Gray
+Write-Host "[Stap 14C] Mozilla.Firefox.nl" -ForegroundColor Gray
 #
 winget install Mozilla.Firefox.nl
 #
@@ -562,7 +584,7 @@ winget install Mozilla.Firefox.nl
 #   ####################
 #
 #
-Write-Host "[WinGet] GNU Nano" -ForegroundColor Gray
+Write-Host "[Stap 14D] GNU Nano" -ForegroundColor Gray
 #
 winget install GNU.Nano --scope machine --accept-package-agreements --accept-source-agreements
 #
@@ -572,20 +594,21 @@ winget install GNU.Nano --scope machine --accept-package-agreements --accept-sou
 #   ####################
 #
 #
-Write-Host "[WinGet] NotePad++" -ForegroundColor Gray
+Write-Host "[Stap 14E] NotePad++" -ForegroundColor Gray
 #
 winget install Notepad++.Notepad++ --scope machine --accept-package-agreements --accept-source-agreements
 #
 #
 #   ####################
-#   Powershell 7
+#   Powershell 7 installeren 
 #   ####################
+#
 #
 #   Windows Desktop
 #
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -eq 1) {
-    Write-Host "[WinGET] Powershell 7" -ForegroundColor Gray
+    Write-Host "[Stap14F] Powershell 7 Windows Desktop" -ForegroundColor Gray
     #
     winget install Microsoft.Powershell --accept-package-agreements --accept-source-agreements
     #
@@ -595,7 +618,7 @@ if ($osInfo.ProductType -eq 1) {
 #
 $osInfo = Get-CimInstance -ClassName Win32_OperatingSystem
 if ($osInfo.ProductType -ne 1) {
-    Write-Host "[WinGET] Powershell 7" -ForegroundColor Gray
+    Write-Host "[Stap14F] Powershell 7 Windows Server" -ForegroundColor Gray
     #
     winget install Microsoft.Powershell --scope machine --accept-package-agreements --accept-source-agreements
     #
@@ -607,7 +630,7 @@ if ($osInfo.ProductType -ne 1) {
 #   ####################
 #
 #
-Write-Host "[WinGET] Microsoft.Sysinternals.RAMMap" -ForegroundColor Gray
+Write-Host "[STap14G] Microsoft.Sysinternals.RAMMap" -ForegroundColor Gray
 #
 winget install Microsoft.Sysinternals.RAMMap --scope machine --accept-package-agreements --accept-source-agreements
 #
@@ -617,7 +640,7 @@ winget install Microsoft.Sysinternals.RAMMap --scope machine --accept-package-ag
 #   ####################
 #
 #
-Write-Host "[WinGet] Microsoft Windows Terminal (Huidige Gebruiker)" -ForegroundColor Gray
+Write-Host "[Stap14H] Microsoft Windows Terminal (Huidige Gebruiker)" -ForegroundColor Gray
 #
 #   Let OP
 #
@@ -628,45 +651,66 @@ Write-Host "[WinGet] Microsoft Windows Terminal (Huidige Gebruiker)" -Foreground
 winget install Microsoft.WindowsTerminal
 #
 #
+echo "STAP 14 Applicaties installeren mbv Winget voltooid" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
+#
+#
 #   ####################
-#   WinGET Update Applicaties
+#   Stap 15 WinGET Update Applicaties
 #   ####################
 #
 #
 #
-Write-Host "[WinGet] Alles bijwerken" -ForegroundColor Gray
+Write-Host "[Stap 15] Winget update software" -ForegroundColor Gray
 #
 winget update --all
 #
 #
-cmd /c "echo Deel 3 Installeren mbv Winget afgerond >> c:\Scripts\VM-OOBE-LOG.txt"
+echo "STAP 15 Winget update software" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ###########################################
+#   Stap 16 Powershell klaarmaken voor gebruik
 #   ###########################################
-#   DEEL 4 Powershell klaarmaken voor gebruik
-#   ###########################################
-#   ###########################################
-
-
+#
+echo "STAP 16 Powershell klaarmaken voor gebruik gestart" | Add-Content c:\Scripts\VM-OOBE-LOG.txt 
 #
 #
 #   ###################
-#   Powershell Basisinstellingen aanpassen 
+#   Stap 16A Powershell Basisinstellingen aanpassen 
 #   ###################
 #
 #
 
 #   Powershell Gallery vetrouwen 
 Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+pwsh -c Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
+
+#   Voorkeurgen
+$ConfirmPreference = 'None'
+$ErrorActionPreference = 'Stop'
+
+pwsh -c $ConfirmPreference = 'None'
+pwsh -c $ErrorActionPreference = 'Stop'
 
 #   TLS protocol versie 1.2 
-[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-
+Try {
+    [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+}
+Catch {
+    Write-Host "[Powershell 5] TLS Protocol versie 1.2 instellen zorgde voor een error"
+} 
+#
+#
+Try {
+    pwsh -c [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+}
+Catch {
+    Write-Host "[Powershell 7] TLS Protocol versie 1.2 instellen zorgde voor een error"
+} 
 #
 #
 #   ###################
-#   Powershell NuGet provider en PowerShellGet bijwerken
+#   Stap 16B Powershell NuGet provider en PowerShellGet bijwerken
 #   ###################
 #
 #
@@ -675,68 +719,74 @@ Set-PSRepository -Name PSGallery -InstallationPolicy Trusted
 #   https://oneuptime.com/blog/post/2026-02-16-how-to-troubleshoot-azure-powershell-module-installation-and-authentication-errors/view
 #
 
-Write-Host "[Powershell 5] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
+Try { 
+    Write-Host "[Powershell 5] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
+    Install-Module -Name PowerShellGet -Force -AllowClobber -AcceptLicense -Confirm:$false
+    Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false
+}
+Catch {
+    Write-Host "[Powershell 5] NuGet Provider en Powershell Get bijwerken is niet gelukt"
+} 
 #
-
-Install-Module -Name PowerShellGet -Force -AllowClobber
-Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-
-Write-Host "[Powershell 7] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
 #
-pwsh -c Install-Module -Name PowerShellGet -Force -AllowClobber
-pwsh -c Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force
-
+Try { 
+    Write-Host "[Powershell 7] NuGet provider en PowerShellGet bijwerken" -ForegroundColor White
+    pwsh -c Install-Module -Name PowerShellGet -Force -AllowClobber -AcceptLicense -Confirm:$false
+    pwsh -c Install-PackageProvider -Name NuGet -MinimumVersion 2.8.5.201 -Force -Confirm:$false
+}
+Catch {
+    Write-Host "[Powershell 7] NuGet Provider en Powershell Get bijwerken is niet gelukt"
+} 
+#
+#
+#   ###################
+#   Stap 16C Powershell Windows Updates installeren
+#   ###################
+#
+#
+Try { 
+    Install-Module -Name PSWindowsUpdate -Force
+    Import-Module PSWindowsUpdate
+} 
+Catch {
+    Write-Host "[Powershell 5] Powershell Module Windows Update installatie is niet gelukt"
+} 
+#
+#
+Try { 
+    pwsh -c Install-Module -Name PSWindowsUpdate -Force
+    pwsh -c Import-Module PSWindowsUpdate
+} 
+Catch {
+    Write-Host "[Powershell 7] Powershell Module Windows Update installatie is niet gelukt"
+} 
 
 #
 #
 #   ###################
-#   Powershell Windows Updates installeren
+#   Stap 16D Powershell Remote Config 
 #   ###################
 #
 #
+Try { 
+    Write-Host "[Powershell 5] Remote configureren ..." -ForegroundColor White
+    Enable-PSRemoting -Force
+} 
+Catch {
+    Write-Host "Powershell 5 Remote Config is niet gelukt"
+} 
 
-Install-Module -Name PSWindowsUpdate -Force
-Import-Module PSWindowsUpdate
 
-#
+Try { 
+    Write-Host "[Powershell 7] Remote configureren ..." -ForegroundColor White
+    pwsh -c Enable-PSRemoting -Force
+} 
+Catch {
+    Write-Host "Powershell 7 Remote Config is niet gelukt"
+} 
 #
 #   ###################
-#   Powershell Remote Config 
-#   ###################
-#
-#
-Write-Host "[Powershell 5] Remote configureren ..." -ForegroundColor White
-#
-Enable-PSRemoting -Force
-
-#
-Write-Host "[Powershell 7] Remote configureren ..." -ForegroundColor White
-#
-pwsh -c Enable-PSRemoting -Force
-
-#
-Write-Host "[Windows Firewall] WinRM configureren ..." -ForegroundColor White
-#
-
-#   WinRM HTTP
-Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
-
-#   WinRM HTTPS
-
-New-NetFirewallRule `
-  -Name "WinRM HTTPS" `
-  -DisplayName "WinRM HTTPS" `
-  -Direction Inbound `
-  -Protocol TCP `
-  -LocalPort 5986 `
-  -Action Allow `
-  -Profile Domain,Private `
-  -Service WinRM
-
-#
-#
-#   ###################
-#   Powershell 5 en 7 Active Directory
+#   Stap 16E Powershell 5 en 7 Active Directory
 #   ###################
 #
 #   https://www.varonis.com/blog/powershell-active-directory-module
@@ -771,7 +821,7 @@ if ($osInfo.ProductType -ne 1) {
 #
 #
 #   ###################
-#   Powershell Azure
+#   Stap 16F Powershell Azure
 #   ###################
 #
 #
@@ -789,7 +839,7 @@ pwsh -c Install-Module -Name Az -Repository PSGallery -Force
 #
 #
 #   ###################
-#   Powershell Help
+#   Stap 16G Powershell Help
 #   ###################
 #
 #
@@ -803,13 +853,11 @@ pwsh -c Update-Help -force -ea 0
 
 #
 #
-cmd /c "echo Deel 4 Powershell Configuratie is gereed >> c:\Scripts\VM-OOBE-LOG.txt"
+cmd /c "echo Deel 4 Powershell Configuratie is gereed >> c:\Scripts\VM-OOBE-LOG.txt
 #
 #
 #   ###########################################
-#   ###########################################
-#   DEEL 5 Scripts Downloaden 
-#   ###########################################
+#   Stap 17 Powershell Scripts Downloaden 
 #   ###########################################
 #
 #
@@ -845,13 +893,11 @@ Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config
 Invoke-WebRequest -URI https://raw.githubusercontent.com/jatutert/Windows-Config/refs/heads/main/PS-Windows-Active-Directory/ad_gebruikers.csv -OutFile "C:\Scripts\ad_gebruikers.csv" 
 #
 #
-cmd /c "echo Deel 5 Scripts downloaden is gereed >> c:\Scripts\VM-OOBE-LOG.txt"
+cmd /c "echo Deel 5 Scripts downloaden is gereed >> c:\Scripts\VM-OOBE-LOG.txt
 #
 #
 #   ###########################################
-#   ###########################################
-#   DEEL 6 Windows Server SSH en WINRM 
-#   ###########################################
+#   Stap 18 Windows Server SSH en WINRM 
 #   ###########################################
 #
 #
@@ -905,7 +951,7 @@ if ($osInfo.ProductType -ne 1) {
     }
     #
     #
-    cmd /c "echo Deel 6 Windows Server SSH en WinRM is gereed >> c:\Scripts\VM-OOBE-LOG.txt"
+    cmd /c "echo Deel 6 Windows Server SSH en WinRM is gereed >> c:\Scripts\VM-OOBE-LOG.txt
 } 
 #
 #
@@ -933,6 +979,42 @@ if ($osInfo.ProductType -ne 1) {
     #
     #
 }
+
+#
+#
+#   ###################
+#   Windows Firewall WinRM Config 
+#   ###################
+#
+#
+Try { 
+    Write-Host "[Windows Firewall] WinRM HTTP configureren ..." -ForegroundColor White
+    Set-NetFirewallRule -Name 'WINRM-HTTP-In-TCP' -RemoteAddress Any
+}
+Catch {
+    Write-Host "[Windows Firewall] WinRM HTTP Configuratie is niet gelukt"
+} 
+#
+#
+Try {
+    Write-Host "[Windows Firewall] WinRM HTTP configureren ..." -ForegroundColor White
+    New-NetFirewallRule `
+    -Name "WinRM HTTPS" `
+    -DisplayName "WinRM HTTPS" `
+    -Direction Inbound `
+    -Protocol TCP `
+    -LocalPort 5986 `
+    -Action Allow `
+    -Profile Domain,Private `
+    -Service WinRM
+} 
+Catch {
+    Write-Host "[Windows Firewall] WinRM HTTPS Configuratie is niet gelukt"
+} 
+#
+
+
+
 
 #
 #

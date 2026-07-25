@@ -9,29 +9,28 @@
 #     TT    UUUUUU    TT    SSSSSS  OOOOOO  FF        TT
 #
 #     The Netherlands/Nederland/Niederlande/Pays Bas/Paisos Bajos
-#     NL EU
 #
 #
 #
-#     Windows Desktop and Windows Server 
-#     Out of Box Experience Configurator
+#   Windows Desktop and Windows Server 
+#   Out of Box Experience Configurator
 #
 #
-#     Makes your Windows Desktop or Windows Server ready for any use ! 
+#   Makes your Windows ready for any use ! 
 #
 #
-#     For Personal and/or Education Use Only ! 
+#   For Personal and/or Education Use Only ! 
 #
 #
-#     VERSION 035
-#     24 juli 2026
+#   VERSION 034
+#   24 juli 2026
 #
 #
 Clear-Host
 #
 #
 Write-Host "Out of Box Experience (OOBE) configurator" -ForegroundColor Green
-Write-Host "Version 35" -ForegroundColor Green
+Write-Host "Version 34" -ForegroundColor Green
 Write-Host "Created by TutSOFT for personal and/or educational use" -ForegroundColor Green
 #
 #
@@ -181,6 +180,7 @@ cmd /c "echo Stap 5 Windows Services aanpassen afgerond >> c:\Scripts\VM-OOBE-LO
 Write-Host "Stap 6 IP-Adres en DNS-instellingen aanpassen"
 #
 #
+
 # Zoek de netwerkadapter met een IPv4-adres dat begint met 10.
 $AdapterConfig = Get-NetIPAddress -AddressFamily IPv4 |
     Where-Object { $_.IPAddress -like '10.*' } |
@@ -200,8 +200,8 @@ if ($AdapterConfig) {
     $Octets = $CurrentIP.Split('.')
     $NetworkBase = "$($Octets[0]).$($Octets[1]).$($Octets[2])"
 
-    # DNS-server krijgt altijd .101 als laatste octet
-    $DnsServer = "$NetworkBase.101"
+    # DNS-server krijgt altijd .200 als laatste octet
+    $DnsServer = "$NetworkBase.200"
 
     # Bepaal nieuw IP-adres op basis van hostname
     $ComputerName = $env:COMPUTERNAME.ToUpper()
@@ -227,71 +227,55 @@ if ($AdapterConfig) {
 
         Write-Host "Nieuw IP-adres wordt: $NewIP"
 
-        try {
+        # Bepaal huidige default gateway (indien aanwezig)
+        $Gateway = (
+            Get-NetRoute -InterfaceIndex $InterfaceIndex `
+                         -DestinationPrefix "0.0.0.0/0" |
+            Sort-Object RouteMetric |
+            Select-Object -First 1
+        ).NextHop
 
-            # Bepaal huidige default gateway
-            $Gateway = (
-                Get-NetRoute -InterfaceIndex $InterfaceIndex `
-                    -DestinationPrefix "0.0.0.0/0" `
-                    -ErrorAction SilentlyContinue |
-                Sort-Object RouteMetric |
-                Select-Object -First 1
-            ).NextHop
+        #
+        #   Verwijder bestaande statische IPv4-adressen
+        #
 
-            # Verwijder bestaande statische IPv4-adressen
-            Get-NetIPAddress -InterfaceIndex $InterfaceIndex `
-                -AddressFamily IPv4 `
-                -ErrorAction SilentlyContinue |
-                Where-Object { $_.PrefixOrigin -eq 'Manual' } |
-                Remove-NetIPAddress -Confirm:$false -ErrorAction SilentlyContinue
+        Get-NetIPAddress -InterfaceIndex $InterfaceIndex -AddressFamily IPv4 |
+            Where-Object { $_.PrefixOrigin -eq 'Manual' } |
+            Remove-NetIPAddress -Confirm:$false
 
-            Start-Sleep -Seconds 2
+        # Wacht kort zodat Windows de wijzigingen verwerkt
+        Start-Sleep -Seconds 2
 
-            # Stel nieuw IP-adres in
-            if ($Gateway) {
-                New-NetIPAddress `
-                    -InterfaceIndex $InterfaceIndex `
-                    -IPAddress $NewIP `
-                    -PrefixLength $PrefixLength `
-                    -DefaultGateway $Gateway `
-                    -ErrorAction Stop
-            }
-            else {
-                New-NetIPAddress `
-                    -InterfaceIndex $InterfaceIndex `
-                    -IPAddress $NewIP `
-                    -PrefixLength $PrefixLength `
-                    -ErrorAction Stop
-            }
 
-            Write-Host "IP-adres ingesteld op $NewIP"
+        #
+        #   Stel nieuw statisch IP-adres in
+        #
 
-            # Alleen voor servers die geen DC zijn
-            if ($ComputerName -ne 'SXN-DC-01') {
-
-                try {
-                    Set-DnsClientServerAddress `
-                        -InterfaceIndex $InterfaceIndex `
-                        -ServerAddresses $DnsServer `
-                        -ErrorAction Stop
-
-                    Write-Host "DNS-server ingesteld op $DnsServer"
-                }
-                catch {
-                    Write-Warning "DNS-server kon niet worden ingesteld."
-                    Write-Warning $_.Exception.Message
-                }
-            }
-            else {
-                Write-Host "DNS-configuratie overgeslagen voor $ComputerName"
-            }
-
-            Write-Host "Netwerkconfiguratie voltooid."
+        if ($Gateway) {
+            New-NetIPAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -IPAddress $NewIP `
+                -PrefixLength $PrefixLength `
+                -DefaultGateway $Gateway
         }
-        catch {
-            Write-Warning "Netwerkconfiguratie is mislukt."
-            Write-Warning $_.Exception.Message
+        else {
+            New-NetIPAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -IPAddress $NewIP `
+                -PrefixLength $PrefixLength
         }
+
+        # Configureer DNS indien hostname NIET SXN-DC-01 is
+        if ($ComputerName -ne 'SXN-DC-01') {
+
+            Set-DnsClientServerAddress `
+                -InterfaceIndex $InterfaceIndex `
+                -ServerAddresses $DnsServer
+
+            Write-Host "DNS-server ingesteld op $DnsServer"
+        }
+
+        Write-Host "Netwerkconfiguratie voltooid."
     }
 }
 else {
@@ -301,6 +285,7 @@ else {
     Write-Warning "Configureer de netwerkkaart handmatig indien nodig."
 
 }
+
 #
 #   ######################
 #   Netwerkkaart 1 van Publiek naar Privaat zetten voor netwerkprofiel 
