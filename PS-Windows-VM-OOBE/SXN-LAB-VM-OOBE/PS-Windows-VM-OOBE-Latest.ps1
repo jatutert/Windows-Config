@@ -48,7 +48,7 @@ Write-Host "Vullen variabelen"
 #
 $OOBECVersion    = "1"
 $OOBECBuild      = "039"
-$OOBECUpdate     =  "1"
+$OOBECUpdate     =  "2"
 $OOBECChannel    = "Canary"
 $OOBECBuildDate  = "27 juli 2026"
 #
