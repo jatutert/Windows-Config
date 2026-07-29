@@ -93,10 +93,10 @@ foreach ($Gebruiker in $Gebruikers) {
             -GivenName             $Gebruiker.Voornaam `
             -Surname               $Gebruiker.Achternaam `
             -SamAccountName        $Gebruiker.Gebruikersnaam `
-            -UserPrincipalName     $Gebruiker.Gebruikersnaam + "@" + DomainDN `
+            -UserPrincipalName     $Gebruiker.UserPrincipalName `
             -Department            $Gebruiker.Department `
             -Title                 $Gebruiker.Title `
-            -Description           $Gebruiker.Title + " " + Department `
+            -Description           $Gebruiker.Description `
             -AccountPassword       $SecurePassword `
             -Enabled               $true `
             -Path                  $TargetOU `
