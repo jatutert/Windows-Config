@@ -11,17 +11,39 @@
 #   For Personal and/or Education Use Only ! 
 #
 #
-#   16 juli 2026
+#   28 juli 2026
 #
 #
+Clear-Host
+Write-Host "Active Directory Domain Services Importeer Gebruikers Script"
+Write-Host " "
+
 # Active Directory module laden
 Import-Module ActiveDirectory
 
 # Pad naar CSV
 $CsvPad = ".\ad_gebruikers.csv"
 
-# Domein root
+# Standaard waarde Domain Name
 $DomainDN = "DC=ccshomelab,DC=net"
+
+# Studentnummer toevoegen aan Domain Name
+do {
+    $StudentNumber = Read-Host "Voer jouw 6-cijferige studentnummer in om toe te voegen aan Domain Name"
+
+    if ($StudentNumber -match '^\d{6}$') {
+        $ValidInput = $true
+    }
+    else {
+        Write-Host "Fout: voer exact 6 cijfers in." -ForegroundColor Red
+        $ValidInput = $false
+    }
+}
+while (-not $ValidInput)
+
+# Domain Name voor de rest van het script
+
+$DomainDN = "DC=homelab$StudentNumber,DC=net"
 
 # CSV inlezen
 $Gebruikers = Import-Csv -Path $CsvPad
@@ -71,14 +93,14 @@ foreach ($Gebruiker in $Gebruikers) {
             -GivenName             $Gebruiker.Voornaam `
             -Surname               $Gebruiker.Achternaam `
             -SamAccountName        $Gebruiker.Gebruikersnaam `
-            -UserPrincipalName     $Gebruiker.UserPrincipalName `
+            -UserPrincipalName     $Gebruiker.Gebruikersnaam + "@" + DomainDN `
             -Department            $Gebruiker.Department `
             -Title                 $Gebruiker.Title `
-            -Description           $Gebruiker.Description `
+            -Description           $Gebruiker.Title + " " + Department `
             -AccountPassword       $SecurePassword `
             -Enabled               $true `
             -Path                  $TargetOU `
-            -ChangePasswordAtLogon $true
+            -ChangePasswordAtLogon $false
 
         Write-Host "Gebruiker aangemaakt:" $Gebruiker.Gebruikersnaam -ForegroundColor Green
     }
