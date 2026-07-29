@@ -1,4 +1,4 @@
-Voornaam,Achternaam,Gebruikersnaam,DisplayName,UserPrincipalName,Department,Title,Description,Wachtwoord,OU,OU
+Voornaam,Achternaam,Gebruikersnaam,DisplayName,UserPrincipalName,Department,Title,Description,Wachtwoord,VerzamelOU,GebruikersOU
 Phil,Mitchell,mitch011,Phil Mitchell,mitch011@homelab.net,EastEnders,Monteur,Personage uit EastEnders,g42sK&Y@,"OU=TVSeries,OU=EastEnders,DC=homelab,DC=net"
 Grant,Mitchell,mitch948,Grant Mitchell,mitch948@homelab.net,EastEnders,Beveiliging,Personage uit EastEnders,O$8!r9dT,"OU=TVSeries,OU=EastEnders,DC=homelab,DC=net"
 Peggy,Mitchell,mitch422,Peggy Mitchell,mitch422@homelab.net,EastEnders,Horecaondernemer,Personage uit EastEnders,KMyd&94$,"OU=TVSeries,OU=EastEnders,DC=homelab,DC=net"
