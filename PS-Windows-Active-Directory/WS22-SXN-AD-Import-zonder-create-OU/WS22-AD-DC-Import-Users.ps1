@@ -52,7 +52,7 @@ foreach ($Gebruiker in $Gebruikers) {
             -AccountPassword   $SecurePassword `
             -Enabled           $true `
             -Path              $TargetOU `
-            -ChangePasswordAtLogon $true
+            -ChangePasswordAtLogon $false
 
         Write-Host "Gebruiker aangemaakt:" $Gebruiker.Gebruikersnaam -ForegroundColor Green
     }
